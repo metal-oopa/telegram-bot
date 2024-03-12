@@ -5,7 +5,7 @@ ZODIAC_SIGNS = [
 DAYS = ["TODAY", "TOMORROW", "YESTERDAY"]
 
 ERROR_MESSAGES = {
-    "token_not_found": "Bot token not found. Please set the BOT_TOKEN environment variable.",
+    "not_found": "not found.",
     "invalid_date": "Invalid date format. Please use YYYY-MM-DD format or TODAY, TOMORROW, YESTERDAY.",
     "invalid_sign": "Invalid zodiac sign.",
     "error": "An error occurred. Please try again later.",

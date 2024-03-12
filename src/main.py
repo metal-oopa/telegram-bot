@@ -1,17 +1,23 @@
 from dotenv import load_dotenv
 import os
 import telebot
+from openai import OpenAI
 
 from utils.utils import get_daily_horoscope, date_format_check
 from constants.constants import ZODIAC_SIGNS, COMMANDS, ERROR_MESSAGES, RESPONSES, DAYS
 load_dotenv()
 
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
+OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
 
 if not BOT_TOKEN:
-    raise ValueError(ERROR_MESSAGES["token_not_found"])
+    raise ValueError(f"BOT_TOKEN {ERROR_MESSAGES['not_found']}")
 
-bot = telebot.TeleBot(BOT_TOKEN)  # type: ignore
+if not OPENAI_API_KEY:
+    raise ValueError(f"OPENAI_API_KEY {ERROR_MESSAGES['not_found']}")
+
+bot = telebot.TeleBot(BOT_TOKEN)
+client = OpenAI(api_key=OPENAI_API_KEY)
 
 
 @bot.message_handler(commands=['start', 'hello'])
@@ -69,7 +75,14 @@ def fetch_horoscope(message, sign):
 
 @bot.message_handler(func=lambda msg: True)
 def echo_all(message):
-    bot.reply_to(message, message.text)
+    text = message.text
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[{"role": "user", "content":  text}],
+    )
+    completion = response.choices[0].message.content if response.choices[
+        0].message.content else "I'm sorry, I don't understand."
+    bot.send_message(message.chat.id, completion)
 
 
 bot.infinity_polling()
