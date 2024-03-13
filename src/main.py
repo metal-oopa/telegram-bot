@@ -22,7 +22,9 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 
 @bot.message_handler(commands=['start', 'hello'])
 def send_welcome(message):
-    text = f"Hello, {message.from_user.first_name}! How are you doing?"
+    text = f"Hello, {message.from_user.first_name}! How are you doing?\n\n"
+    for command, description in COMMANDS.items():
+        text += f"/{command} - {description}\n"
     bot.reply_to(message, text)
 
 
@@ -76,6 +78,12 @@ def fetch_horoscope(message, sign):
 @bot.message_handler(func=lambda msg: True)
 def echo_all(message):
     text = message.text
+    bot.send_chat_action(message.chat.id, 'typing')
+
+    reaction = telebot.types.ReactionTypeEmoji('👍')
+    bot.set_message_reaction(
+        message.chat.id, message.message_id, [reaction], True)
+
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[{"role": "user", "content":  text}],

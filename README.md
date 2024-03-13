@@ -7,3 +7,4 @@ Oopa Genie is a all in one telegram bot. Without using any commands, it will wor
 ## Features
 - Horoscope
 - ChatGPT
+- Reacts to messages
