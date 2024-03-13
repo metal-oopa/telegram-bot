@@ -16,8 +16,6 @@ def get_daily_horoscope(sign: str, day: str) -> dict:
 
     return response.json()
 
-# get waifu pic from waifu.pics based on the category, sfw or nsfw, and tags
-
 
 def get_waifu_pic(category: str, tags: str) -> dict:
     """Get waifu pic from waifu.pics based on the category, sfw or nsfw, and tags.
