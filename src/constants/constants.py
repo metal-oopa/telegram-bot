@@ -12,6 +12,7 @@ URLS = {
     "sfw": "https://waifu.pics/api/sfw/waifu",
     "anime_pic": "f'https://api.jikan.moe/v3",
     "anime_quote": "https://animechan.xyz/api/random",
+    "reko": "https://api.reko.moe"
 }
 
 ERROR_MESSAGES = {
@@ -25,9 +26,10 @@ COMMANDS = {
     "hello": "Say hello to the bot.",
     "horoscope": "Get daily horoscope for a zodiac sign.",
     "weather": "Get weather for a city.",
+    "recommend <mal username>": "Get anime recommendations for a user.",
     "rquote": "Get a random anime quote.",
-    "aquote": "Get a quote from a specific anime.",
-    "cquote": "Get a quote from a specific character.",
+    "aquote <anime>": "Get a quote from a specific anime.",
+    "cquote <character>": "Get a quote from a specific character.",
     "nsfw": "Get a nsfw waifu pic.",
     "sfw": "Get a sfw waifu pic.",
     "waifu": "Get a waifu pic with option to choose tags",

@@ -132,6 +132,25 @@ def get_weather(city: str, api_key: str) -> dict:
     return response.json()
 
 
+def get_anime_recommendations(username: str, page: int, batch: int) -> dict:
+    """Get anime recommendations for a user.
+
+    Keyword arguments:
+    username:str - Username
+    page:int - Page number
+    batch:int - Batch size
+    Return:dict - JSON data
+    """
+    url = f"{constants.URLS['reko']}/{username}/recommendations"
+    params = {
+        "page": page,
+        "batch": batch
+    }
+    response = requests.get(url, params)
+
+    return response.json()
+
+
 def date_format_check(date: str) -> bool:
     """Check if date is in correct format (YYYY-MM-DD).
 
