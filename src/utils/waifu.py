@@ -1,5 +1,5 @@
-from constants.constants import ERROR_MESSAGES, WAIFU_PICS_CATEGORIES
-from utils.utils import get_waifu_pic, get_random_nsfw_waifu_pic, get_random_sfw_waifu_pic
+from utils import utils
+from constants import constants
 
 
 def handle_waifu_command(bot, message):
@@ -15,7 +15,7 @@ def fetch_waifu_pic(message, bot):
         return
 
     text = f"Choose a tag from the list: \n"
-    for tag in WAIFU_PICS_CATEGORIES[category.lower()]:
+    for tag in constants.WAIFU_PICS_CATEGORIES[category.lower()]:
         text += f"{tag} "
 
     sent_msg = bot.send_message(message.chat.id, text)
@@ -25,30 +25,30 @@ def fetch_waifu_pic(message, bot):
 
 def send_waifu_pic(message, category, bot):
     tags = message.text
-    if tags.lower() not in WAIFU_PICS_CATEGORIES[category]:
+    if tags.lower() not in constants.WAIFU_PICS_CATEGORIES[category]:
         bot.send_message(message.chat.id, "Invalid tag.")
         return
-    waifu_pic = get_waifu_pic(category, tags)
+    waifu_pic = utils.get_waifu_pic(category, tags)
     if not waifu_pic["url"]:
-        bot.send_message(message.chat.id, ERROR_MESSAGES["error"])
+        bot.send_message(message.chat.id, constants.ERROR_MESSAGES["error"])
         return
 
     bot.send_photo(message.chat.id, waifu_pic["url"])
 
 
 def handle_nsfw_waifu_command(bot, message):
-    waifu_pic = get_random_nsfw_waifu_pic()
+    waifu_pic = utils.get_random_nsfw_waifu_pic()
     if not waifu_pic["url"]:
-        bot.send_message(message.chat.id, ERROR_MESSAGES["error"])
+        bot.send_message(message.chat.id, constants.ERROR_MESSAGES["error"])
         return
 
     bot.send_photo(message.chat.id, waifu_pic["url"])
 
 
 def handle_sfw_waifu_command(bot, message):
-    waifu_pic = get_random_sfw_waifu_pic()
+    waifu_pic = utils.get_random_sfw_waifu_pic()
     if not waifu_pic["url"]:
-        bot.send_message(message.chat.id, ERROR_MESSAGES["error"])
+        bot.send_message(message.chat.id, constants.ERROR_MESSAGES["error"])
         return
 
     bot.send_photo(message.chat.id, waifu_pic["url"])

@@ -1,17 +1,17 @@
-from constants.constants import COMMANDS, RESPONSES
 import telebot
+from constants import constants
 
 
 def send_welcome(bot, message):
     text = f"Hello, {message.from_user.first_name}! How are you doing?\n\n"
-    for command, description in COMMANDS.items():
+    for command, description in constants.COMMANDS.items():
         text += f"/{command} - {description}\n"
     bot.reply_to(message, text)
 
 
 def send_help(bot, message):
-    text = RESPONSES["help"]
-    for command, description in COMMANDS.items():
+    text = constants.RESPONSES["help"]
+    for command, description in constants.COMMANDS.items():
         text += f"/{command} - {description}\n"
     bot.send_message(message.chat.id, text)
 

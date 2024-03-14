@@ -4,6 +4,16 @@ ZODIAC_SIGNS = [
 
 DAYS = ["TODAY", "TOMORROW", "YESTERDAY"]
 
+URLS = {
+    "horoscope": "https://horoscope-app-api.vercel.app/api/v1/get-horoscope/daily",
+    "weather": "http://api.openweathermap.org/data/2.5/weather",
+    "waifu": "https://api.waifu.pics/api",
+    "nsfw": "https://waifu.pics/api/nsfw/waifu",
+    "sfw": "https://waifu.pics/api/sfw/waifu",
+    "anime_pic": "f'https://api.jikan.moe/v3",
+    "anime_quote": "https://animechan.xyz/api/random",
+}
+
 ERROR_MESSAGES = {
     "not_found": "not found.",
     "invalid_date": "Invalid date format. Please use YYYY-MM-DD format or TODAY, TOMORROW, YESTERDAY.",
@@ -15,6 +25,9 @@ COMMANDS = {
     "hello": "Say hello to the bot.",
     "horoscope": "Get daily horoscope for a zodiac sign.",
     "weather": "Get weather for a city.",
+    "rquote": "Get a random anime quote.",
+    "aquote": "Get a quote from a specific anime.",
+    "cquote": "Get a quote from a specific character.",
     "nsfw": "Get a nsfw waifu pic.",
     "sfw": "Get a sfw waifu pic.",
     "waifu": "Get a waifu pic with option to choose tags",

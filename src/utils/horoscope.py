@@ -1,19 +1,20 @@
-from constants.constants import RESPONSES, ERROR_MESSAGES, ZODIAC_SIGNS, DAYS
-from utils.utils import get_daily_horoscope, date_format_check
+from utils import utils
+from constants import constants
 
 
 def handle_horoscope_command(bot, message):
-    text = RESPONSES["horoscope"]
+    text = constants.RESPONSES["horoscope"]
     sent_msg = bot.send_message(message.chat.id, text, parse_mode="Markdown")
     bot.register_next_step_handler(sent_msg, day_handler, bot)
 
 
 def day_handler(message, bot):
     sign = message.text.capitalize()
-    if sign not in ZODIAC_SIGNS:
-        bot.send_message(message.chat.id, ERROR_MESSAGES["invalid_sign"])
+    if sign not in constants.ZODIAC_SIGNS:
+        bot.send_message(
+            message.chat.id, constants.ERROR_MESSAGES["invalid_sign"])
         return
-    text = RESPONSES["day"]
+    text = constants.RESPONSES["day"]
     sent_msg = bot.send_message(
         message.chat.id, text, parse_mode="Markdown")
     bot.register_next_step_handler(
@@ -22,11 +23,12 @@ def day_handler(message, bot):
 
 def fetch_horoscope(message, sign, bot):
     day = message.text
-    if not date_format_check(day) and day.upper() not in DAYS:
-        bot.send_message(message.chat.id, ERROR_MESSAGES["invalid_date"])
+    if not utils.date_format_check(day) and day.upper() not in constants.DAYS:
+        bot.send_message(
+            message.chat.id, constants.ERROR_MESSAGES["invalid_date"])
         return
 
-    horoscope = get_daily_horoscope(sign, day)
+    horoscope = utils.get_daily_horoscope(sign, day)
     status = horoscope["status"]
     if status != 200:
         bot.send_message(message.chat.id, horoscope["message"])

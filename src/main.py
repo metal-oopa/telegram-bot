@@ -3,7 +3,7 @@ import telebot
 from openai import OpenAI
 
 from config.config import get_environment_variable
-from utils import horoscope, weather, waifu, message_handlers
+from utils import horoscope, weather, waifu, message_handlers, quotes
 load_dotenv()
 
 BOT_TOKEN = get_environment_variable('BOT_TOKEN')
@@ -12,6 +12,8 @@ OPENWEATHERMAP_API_KEY = get_environment_variable('OPENWEATHERMAP_API_KEY')
 
 bot = telebot.TeleBot(BOT_TOKEN)
 client = OpenAI(api_key=OPENAI_API_KEY)
+
+# TODO: Add recommendations (if possible), memes
 
 
 @bot.message_handler(commands=['start', 'hello'])
@@ -22,6 +24,23 @@ def handle_welcome_message(message):
 @bot.message_handler(commands=['help'])
 def handle_help_message(message):
     message_handlers.send_help(bot, message)
+
+
+@bot.message_handler(commands=['rquote'])
+def handle_random_quote_command(message):
+    quotes.handle_rquote_command(bot, message)
+
+
+@bot.message_handler(commands=['aquote'])
+def handle_anime_quote_command(message):
+    title = message.text.split(' ', 1)[1]
+    quotes.handle_aquote_command(bot, message, title)
+
+
+@bot.message_handler(commands=['cquote'])
+def handle_character_quote_command(message):
+    character = message.text.split(' ', 1)[1]
+    quotes.handle_cquote_command(bot, message, character)
 
 
 @bot.message_handler(commands=['horoscope'])
