@@ -1,5 +1,5 @@
-from utils import utils
-from constants import constants
+from src.utils import utils
+from src.constants import constants
 
 
 def handle_waifu_command(bot, message):

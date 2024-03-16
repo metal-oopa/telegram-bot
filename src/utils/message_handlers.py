@@ -1,5 +1,5 @@
 import telebot
-from constants import constants
+from src.constants import constants
 
 
 def send_welcome(bot, message):

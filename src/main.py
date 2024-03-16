@@ -1,10 +1,10 @@
 from dotenv import load_dotenv
 import telebot
 from openai import OpenAI
-from flask import Flask, request
+from flask import Flask, request, jsonify
 
-from config.config import get_environment_variable
-from utils import horoscope, weather, waifu, message_handlers, quotes, recommendation
+from src.utils import horoscope, weather, waifu, message_handlers, quotes, recommendation
+from src.config.config import get_environment_variable
 load_dotenv()
 
 BOT_TOKEN = get_environment_variable('BOT_TOKEN')
@@ -23,7 +23,7 @@ bot.set_webhook(url=url)
 
 @app.route('/')
 def hello_world():
-    return 'Hello, World!'
+    return 'Hello, World!', 200
 
 
 @app.route('/' + SECRET, methods=['POST'])
@@ -32,6 +32,11 @@ def getMessage():
         request.stream.read().decode('utf-8'))
     bot.process_new_updates([update])  # type: ignore
     return "OK", 200
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return jsonify({"status": 404, "message": "Not Found"}), 404
 
 
 @bot.message_handler(commands=['start', 'hello'])
@@ -103,3 +108,7 @@ def sfw_waifu_handler(message):
 @bot.message_handler(func=lambda msg: True)
 def echo_all(message):
     message_handlers.echo_all(bot, client, message)
+
+
+if __name__ == '__main__':
+    app.run()

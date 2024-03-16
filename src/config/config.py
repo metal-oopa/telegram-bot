@@ -1,5 +1,5 @@
 import os
-from constants.constants import ERROR_MESSAGES
+from src.constants.constants import ERROR_MESSAGES
 
 
 def get_environment_variable(key):

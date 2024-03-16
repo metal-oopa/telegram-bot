@@ -1,8 +1,7 @@
-import re
 import requests
 from datetime import datetime
-from constants import constants
 from random import randint
+from src.constants import constants
 
 
 def get_daily_horoscope(sign: str, day: str) -> dict:
