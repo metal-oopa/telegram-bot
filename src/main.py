@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 import telebot
 from openai import OpenAI
+from flask import Flask, request
 
 from config.config import get_environment_variable
 from utils import horoscope, weather, waifu, message_handlers, quotes, recommendation
@@ -9,11 +10,28 @@ load_dotenv()
 BOT_TOKEN = get_environment_variable('BOT_TOKEN')
 OPENAI_API_KEY = get_environment_variable('OPENAI_API_KEY')
 OPENWEATHERMAP_API_KEY = get_environment_variable('OPENWEATHERMAP_API_KEY')
+SECRET = get_environment_variable('SECRET')
 
+url = "https://metaloopa.pythonanywhere.com/" + SECRET
 bot = telebot.TeleBot(BOT_TOKEN)
 client = OpenAI(api_key=OPENAI_API_KEY)
+app = Flask(__name__)
 
-# TODO: Add memes
+bot.remove_webhook()
+bot.set_webhook(url=url)
+
+
+@app.route('/')
+def hello_world():
+    return 'Hello, World!'
+
+
+@app.route('/' + SECRET, methods=['POST'])
+def getMessage():
+    update = telebot.types.Update.de_json(
+        request.stream.read().decode('utf-8'))
+    bot.process_new_updates([update])  # type: ignore
+    return "OK", 200
 
 
 @bot.message_handler(commands=['start', 'hello'])
@@ -85,6 +103,3 @@ def sfw_waifu_handler(message):
 @bot.message_handler(func=lambda msg: True)
 def echo_all(message):
     message_handlers.echo_all(bot, client, message)
-
-
-bot.infinity_polling()
