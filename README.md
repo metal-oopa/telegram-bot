@@ -11,3 +11,4 @@ Oopa Genie is a all in one telegram bot. Without using any commands, it will wor
 - Reacts to messages
 - Sends anime pics
 - Sends anime quotes
+- Recommends anime
