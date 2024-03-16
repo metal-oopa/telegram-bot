@@ -12,7 +12,7 @@ OPENAI_API_KEY = get_environment_variable('OPENAI_API_KEY')
 OPENWEATHERMAP_API_KEY = get_environment_variable('OPENWEATHERMAP_API_KEY')
 SECRET = get_environment_variable('SECRET')
 
-url = "https://metaloopa.pythonanywhere.com/" + SECRET
+url = "https://telegram-bot-roan-beta.vercel.app/" + SECRET
 bot = telebot.TeleBot(BOT_TOKEN)
 client = OpenAI(api_key=OPENAI_API_KEY)
 app = Flask(__name__)
