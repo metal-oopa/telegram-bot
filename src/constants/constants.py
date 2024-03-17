@@ -7,12 +7,13 @@ DAYS = ["TODAY", "TOMORROW", "YESTERDAY"]
 URLS = {
     "horoscope": "https://horoscope-app-api.vercel.app/api/v1/get-horoscope/daily",
     "weather": "http://api.openweathermap.org/data/2.5/weather",
-    "waifu": "https://api.waifu.pics/api",
+    "waifu": "https://waifu.pics/api",
     "nsfw": "https://waifu.pics/api/nsfw/waifu",
     "sfw": "https://waifu.pics/api/sfw/waifu",
     "anime_pic": "f'https://api.jikan.moe/v3",
     "anime_quote": "https://animechan.xyz/api/random",
-    "reko": "https://api.reko.moe"
+    "reko": "https://api.reko.moe",
+    "webhook": "https://telegram-bot-roan-beta.vercel.app/"
 }
 
 ERROR_MESSAGES = {

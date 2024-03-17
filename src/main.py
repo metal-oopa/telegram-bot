@@ -3,7 +3,7 @@ import telebot
 from openai import OpenAI
 from flask import Flask, request, jsonify
 
-from src.constants.constants import RESPONSES
+from src.constants.constants import RESPONSES, URLS
 from src.utils import horoscope, weather, waifu, message_handlers, quotes, recommendation
 from src.config.config import get_environment_variable
 load_dotenv()
@@ -13,7 +13,7 @@ OPENAI_API_KEY = get_environment_variable('OPENAI_API_KEY')
 OPENWEATHERMAP_API_KEY = get_environment_variable('OPENWEATHERMAP_API_KEY')
 SECRET = get_environment_variable('SECRET')
 
-url = "https://telegram-bot-roan-beta.vercel.app/" + SECRET
+url = URLS['webhook'] + SECRET
 bot = telebot.TeleBot(BOT_TOKEN, threaded=False)
 client = OpenAI(api_key=OPENAI_API_KEY)
 app = Flask(__name__)
