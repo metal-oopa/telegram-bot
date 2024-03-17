@@ -3,6 +3,7 @@ import telebot
 from openai import OpenAI
 from flask import Flask, request, jsonify
 
+from src.constants.constants import RESPONSES
 from src.utils import horoscope, weather, waifu, message_handlers, quotes, recommendation
 from src.config.config import get_environment_variable
 load_dotenv()
@@ -50,16 +51,27 @@ def handle_help_message(message):
 
 @bot.message_handler(commands=['recommend'])
 def handle_recommendations_command(message):
-    username = message.text.split(' ', 1)[1]
-    recommendation.anime_recommendations_handler(bot, message, username)
+    try:
+        username = message.text.split(' ', 1)[1]
+        recommendation.anime_recommendations_handler(bot, message, username)
+    except IndexError:
+        bot.send_message(
+            message.chat.id, RESPONSES['no_username'])
+    except Exception as e:
+        bot.send_message(message.chat.id, f"An error occurred: {str(e)}")
 
 
 @bot.callback_query_handler(func=lambda call: True)
 def handle_callback_query(call):
-    if call.data.startswith('next_anime'):
-        username, number = call.data.split(' ')[1:]
-        recommendation.anime_recommendations_handler(
-            bot, call.message, username, int(number))
+    try:
+        if call.data.startswith('next_anime'):
+            username, number = call.data.split(' ')[1:]
+            recommendation.anime_recommendations_handler(
+                bot, call.message, username, int(number))
+    except ValueError:
+        bot.send_message(call.message.chat.id, "Invalid number format.")
+    except Exception as e:
+        bot.send_message(call.message.chat.id, RESPONSES['error'])
 
 
 @bot.message_handler(commands=['rquote'])
@@ -69,14 +81,28 @@ def handle_random_quote_command(message):
 
 @bot.message_handler(commands=['aquote'])
 def handle_anime_quote_command(message):
-    title = message.text.split(' ', 1)[1]
-    quotes.handle_aquote_command(bot, message, title)
+    try:
+        title = message.text.split(' ', 1)[1]
+        quotes.handle_aquote_command(bot, message, title)
+    except IndexError:
+        bot.send_message(
+            message.chat.id, RESPONSES['no_anime'])
+    except Exception as e:
+        bot.send_message(
+            message.chat.id, RESPONSES['error'])
 
 
 @bot.message_handler(commands=['cquote'])
 def handle_character_quote_command(message):
-    character = message.text.split(' ', 1)[1]
-    quotes.handle_cquote_command(bot, message, character)
+    try:
+        character = message.text.split(' ', 1)[1]
+        quotes.handle_cquote_command(bot, message, character)
+    except IndexError:
+        bot.send_message(
+            message.chat.id, RESPONSES['no_character'])
+    except Exception as e:
+        bot.send_message(
+            message.chat.id, RESPONSES['error'])
 
 
 @bot.message_handler(commands=['horoscope'])

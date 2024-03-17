@@ -42,6 +42,10 @@ RESPONSES = {
     "horoscope": "What's your zodiac sign?\nChoose one: *Aries*, *Taurus*, *Gemini*, *Cancer,* *Leo*, *Virgo*, *Libra*, *Scorpio*, *Sagittarius*, *Capricorn*, *Aquarius*, and *Pisces*.",
     "day": "What day do you want to know?\nChoose one: *TODAY*, *TOMORROW*, *YESTERDAY*, or a past date in format YYYY-MM-DD.",
     "weather": "What city do you want to know the weather for?",
+    "error": "An error occurred. Please try again later.",
+    "no_username": "Please provide a username after the /recommend command.",
+    "no_anime": "Please provide an anime title after the /aquote command.",
+    "no_character": "Please provide a character name after the /cquote command.",
 }
 
 WAIFU_PICS_CATEGORIES = {
