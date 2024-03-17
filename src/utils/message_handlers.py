@@ -13,6 +13,7 @@ def send_help(bot, message):
     text = constants.RESPONSES["help"]
     for command, description in constants.COMMANDS.items():
         text += f"/{command} - {description}\n"
+    text += "\nFor all other messages, ChatGPT will respond with a generated message."
     bot.send_message(message.chat.id, text)
 
 

@@ -26,14 +26,14 @@ COMMANDS = {
     "hello": "Say hello to the bot.",
     "horoscope": "Get daily horoscope for a zodiac sign.",
     "weather": "Get weather for a city.",
-    "recommend <mal username>": "Get anime recommendations for a user.",
+    "recommend <MAL USERNAME>": "Get Anime recommendations.",
     "rquote": "Get a random anime quote.",
-    "aquote <anime>": "Get a quote from a specific anime.",
-    "cquote <character>": "Get a quote from a specific character.",
+    "aquote <ANIME>": "Get a quote from a specific anime.",
+    "cquote <CHARACTER>": "Get a quote from a specific character.",
     "nsfw": "Get a nsfw waifu pic.",
     "sfw": "Get a sfw waifu pic.",
     "waifu": "Get a waifu pic with option to choose tags",
-    "help": "List all commands.\n\n",
+    "help": "List all commands.",
 }
 
 RESPONSES = {
