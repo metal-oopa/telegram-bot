@@ -13,12 +13,9 @@ OPENWEATHERMAP_API_KEY = get_environment_variable('OPENWEATHERMAP_API_KEY')
 SECRET = get_environment_variable('SECRET')
 
 url = "https://telegram-bot-roan-beta.vercel.app/" + SECRET
-bot = telebot.TeleBot(BOT_TOKEN)
+bot = telebot.TeleBot(BOT_TOKEN, threaded=False)
 client = OpenAI(api_key=OPENAI_API_KEY)
 app = Flask(__name__)
-
-bot.remove_webhook()
-bot.set_webhook(url=url)
 
 
 @app.route('/')
@@ -30,7 +27,9 @@ def hello_world():
 def getMessage():
     update = telebot.types.Update.de_json(
         request.stream.read().decode('utf-8'))
-    bot.process_new_updates([update])  # type: ignore
+    if update is not None:
+        print("Message received", update.message.text)
+        bot.process_new_updates([update])
     return "OK", 200
 
 
@@ -112,3 +111,5 @@ def echo_all(message):
 
 if __name__ == '__main__':
     app.run()
+    bot.remove_webhook()
+    bot.set_webhook(url=url)
