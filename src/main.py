@@ -58,7 +58,7 @@ def handle_recommendations_command(message):
         bot.send_message(
             message.chat.id, RESPONSES['no_username'])
     except Exception as e:
-        bot.send_message(message.chat.id, f"An error occurred: {str(e)}")
+        bot.send_message(message.chat.id, RESPONSES['error'])
 
 
 @bot.callback_query_handler(func=lambda call: True)
@@ -138,4 +138,4 @@ def echo_all(message):
 if __name__ == '__main__':
     app.run()
     bot.remove_webhook()
-    bot.set_webhook(url=url)
+    bot.set_webhook(url=url, drop_pending_updates=True)
