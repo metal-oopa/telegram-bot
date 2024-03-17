@@ -28,7 +28,7 @@ def getMessage():
     update = telebot.types.Update.de_json(
         request.stream.read().decode('utf-8'))
     if update is not None:
-        print("Message received", update.message.text)
+        print("Update received", update)
         bot.process_new_updates([update])
     return "OK", 200
 
