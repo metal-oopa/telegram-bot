@@ -24,6 +24,17 @@ def hello_world():
     return 'Hello, World!', 200
 
 
+def error_handler(func):
+    def wrapper(message):
+        try:
+            return func(message)
+        except IndexError:
+            bot.send_message(message.chat.id, RESPONSES['no_argument'])
+        except Exception as e:
+            bot.send_message(message.chat.id, RESPONSES['error'])
+    return wrapper
+
+
 @app.route('/' + SECRET, methods=['POST'])
 def getMessage():
     update = telebot.types.Update.de_json(
@@ -50,15 +61,10 @@ def handle_help_message(message):
 
 
 @bot.message_handler(commands=['recommend'])
+@error_handler
 def handle_recommendations_command(message):
-    try:
-        username = message.text.split(' ', 1)[1]
-        recommendation.anime_recommendations_handler(bot, message, username)
-    except IndexError:
-        bot.send_message(
-            message.chat.id, RESPONSES['no_username'])
-    except Exception as e:
-        bot.send_message(message.chat.id, RESPONSES['error'])
+    username = message.text.split(' ', 1)[1]
+    recommendation.anime_recommendations_handler(bot, message, username)
 
 
 @bot.callback_query_handler(func=lambda call: True)
@@ -80,29 +86,17 @@ def handle_random_quote_command(message):
 
 
 @bot.message_handler(commands=['aquote'])
+@error_handler
 def handle_anime_quote_command(message):
-    try:
-        title = message.text.split(' ', 1)[1]
-        quotes.handle_aquote_command(bot, message, title)
-    except IndexError:
-        bot.send_message(
-            message.chat.id, RESPONSES['no_anime'])
-    except Exception as e:
-        bot.send_message(
-            message.chat.id, RESPONSES['error'])
+    title = message.text.split(' ', 1)[1]
+    quotes.handle_aquote_command(bot, message, title)
 
 
 @bot.message_handler(commands=['cquote'])
+@error_handler
 def handle_character_quote_command(message):
-    try:
-        character = message.text.split(' ', 1)[1]
-        quotes.handle_cquote_command(bot, message, character)
-    except IndexError:
-        bot.send_message(
-            message.chat.id, RESPONSES['no_character'])
-    except Exception as e:
-        bot.send_message(
-            message.chat.id, RESPONSES['error'])
+    character = message.text.split(' ', 1)[1]
+    quotes.handle_cquote_command(bot, message, character)
 
 
 @bot.message_handler(commands=['horoscope'])

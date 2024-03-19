@@ -47,6 +47,7 @@ RESPONSES = {
     "no_username": "Please provide a username after the /recommend command.",
     "no_anime": "Please provide an anime title after the /aquote command.",
     "no_character": "Please provide a character name after the /cquote command.",
+    "no_argument": "Please provide the argument after the command.",
 }
 
 WAIFU_PICS_CATEGORIES = {
